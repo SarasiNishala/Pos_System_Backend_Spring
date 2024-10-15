@@ -18,5 +18,4 @@ public class OrderDetailDTO implements Serializable , OrderResponse {
     private double unitPrice;
     private int quantity;
     private double total;
-
 }
