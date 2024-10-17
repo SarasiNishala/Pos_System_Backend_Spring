@@ -2,7 +2,7 @@
 
 # Manage Customers, Items, and Orders System
 
-![Java](https://img.shields.io/badge/Java-11+-blue.svg)
+![Java](https://img.shields.io/badge/Java-17+-blue.svg)
 ![Spring](https://img.shields.io/badge/Spring-Framework-green.svg)
 ![MySQL](https://img.shields.io/badge/MySQL-Database-orange.svg)
 ![Hibernate](https://img.shields.io/badge/Hibernate-ORM-lightgrey.svg)
