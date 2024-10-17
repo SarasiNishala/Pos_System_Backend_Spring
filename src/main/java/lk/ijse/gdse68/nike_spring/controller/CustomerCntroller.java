@@ -7,6 +7,8 @@ import lk.ijse.gdse68.nike_spring.excption.CustomerNotFoundException;
 import lk.ijse.gdse68.nike_spring.excption.DataPersistFailedException;
 import lk.ijse.gdse68.nike_spring.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +24,8 @@ public class CustomerCntroller {
     @Autowired
     private CustomerService customerService;
 
+    static Logger logger = LoggerFactory.getLogger(CustomerCntroller.class);
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveCustomer(@Valid @RequestBody CustomerDTO customer) {
         if (customer == null) {
@@ -29,10 +33,12 @@ public class CustomerCntroller {
         } else {
             try {
                 customerService.saveCustomer(customer);
+                logger.info("Customer saved : " + customer);
                 return ResponseEntity.created(null).build();
             } catch (DataPersistFailedException e) {
                 return ResponseEntity.badRequest().build();
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 return ResponseEntity.internalServerError().build();
             }
         }
@@ -56,10 +62,12 @@ public class CustomerCntroller {
         } else {
             try {
                 customerService.updateCustomer(customerId, customerDTO);
+                logger.info("Customer updated : " + customerDTO);
                 return ResponseEntity.noContent().build();
             } catch (CustomerNotFoundException e) {
                 return ResponseEntity.notFound().build();
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 return ResponseEntity.internalServerError().build();
             }
         }
@@ -69,10 +77,12 @@ public class CustomerCntroller {
     public ResponseEntity<Void> deleteCustomer(@PathVariable("customerId") String customerId) {
         try {
             customerService.deleteCustomer(customerId);
+            logger.info("Customer deleted : " + customerId);
             return ResponseEntity.noContent().build();
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }

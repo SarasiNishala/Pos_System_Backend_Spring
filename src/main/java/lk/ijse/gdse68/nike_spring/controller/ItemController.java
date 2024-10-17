@@ -7,6 +7,8 @@ import lk.ijse.gdse68.nike_spring.excption.DataPersistFailedException;
 import lk.ijse.gdse68.nike_spring.excption.ItemNotFoundException;
 import lk.ijse.gdse68.nike_spring.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +24,8 @@ public class ItemController {
     @Autowired
     private final ItemService itemService;
 
+    static Logger logger = LoggerFactory.getLogger(ItemController.class);
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveItem(@Valid @RequestBody ItemDTO itemDTO) {
         if (itemDTO == null) {
@@ -29,10 +33,12 @@ public class ItemController {
         } else {
             try {
                 itemService.saveItem(itemDTO);
+                logger.info("Item saved : " + itemDTO);
                 return ResponseEntity.created(null).build();
             } catch (DataPersistFailedException e) {
                 return ResponseEntity.badRequest().build();
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 return ResponseEntity.internalServerError().build();
             }
         }
@@ -56,10 +62,12 @@ public class ItemController {
         } else {
             try {
                 itemService.updateItem(itemCode, itemDTO);
+                logger.info("Item updated : " + itemDTO);
                 return ResponseEntity.noContent().build();
             } catch (DataPersistFailedException e) {
                 return ResponseEntity.badRequest().build();
             } catch (Exception e) {
+                logger.error(e.getMessage());
                 return ResponseEntity.internalServerError().build();
             }
         }
@@ -69,10 +77,12 @@ public class ItemController {
     public ResponseEntity<Void> deleteItem(@PathVariable("itemCode") String itemCode) {
         try {
             itemService.deleteItem(itemCode);
+            logger.info("Item deleted : " + itemCode);
             return ResponseEntity.noContent().build();
         } catch (ItemNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
