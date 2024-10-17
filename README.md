@@ -2,7 +2,7 @@
 
 # Manage Customers, Items, and Orders System
 
-![Java](https://img.shields.io/badge/Java-17+-blue.svg)
+![Java](https://img.shields.io/badge/Java-17-blue.svg)
 ![Spring](https://img.shields.io/badge/Spring-Framework-green.svg)
 ![MySQL](https://img.shields.io/badge/MySQL-Database-orange.svg)
 ![Hibernate](https://img.shields.io/badge/Hibernate-ORM-lightgrey.svg)
@@ -61,7 +61,7 @@ Detailed API documentation with example requests and responses can be viewed [he
 ## 🛠️ Getting Started
 
 ### Prerequisites
-- Java 11+
+- Java 17
 - MySQL Server
 - Maven
 
